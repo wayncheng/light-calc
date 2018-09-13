@@ -1,0 +1,20 @@
+$form-font-size: 1.5rem;
+
+
+.locked {
+	outline: 2px solid red;
+}
+// form, input {
+// }
+form {
+	font-size: 1.5rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+
+
+
+@import './Inputs/Inputs';
