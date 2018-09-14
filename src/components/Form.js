@@ -17,7 +17,7 @@ class Form extends Component {
 
 	submitForm = event => {
 		event.preventDefault();
-
+		console.log('----------- submit ----------')
 	}
 
 	render() {

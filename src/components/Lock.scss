@@ -7,7 +7,7 @@
 	outline: none;
 	border: none;
 	color: $icon-inactive;
-	transition: all 1s;
+	transition: all .24s;
 	padding: 1rem;
 	border-radius:6px;
 	cursor: pointer;
@@ -20,10 +20,11 @@
 	}
 	
 	&:focus {
-		color: $icon-active;
+		// color: $icon-active;
+		color: $color-focus;
 	}
 	&:hover {
-		color: $icon-active;
+		// color: $icon-active;
 		// background-color: rgba(#000,0.12);
 
 		// i::before {

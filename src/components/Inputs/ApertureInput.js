@@ -18,15 +18,14 @@ class ApertureInput extends Component {
 
 	handleInputChange = event => {
 		event.preventDefault();
-		const { value,name } = event.target;
-		let input = value;
+		const { value } = event.target;
 		const payload = {
-			variable: name,
-			value: input,
+			param: 'aperture',
+			value,
 		}
 
 		// If locked, don't change value / update state.
-		const isLocked = this.props.aperture.isLocked;
+		const isLocked = this.props.locks.aperture;
 		if (isLocked) {
 			console.log("Variable is locked. To adjust this variable's value, you must unlock the variable first.")
 		}
@@ -41,7 +40,9 @@ class ApertureInput extends Component {
 	}
 
 	render() {
-		const {value,isLocked} = this.props.aperture;
+		// const {value} = this.props.aperture;
+		const isLocked = this.props.locks.aperture;
+		
 		return (
 			<div className={classNames("input-group","aperture",{locked:isLocked})}>
 				<label htmlFor="aperture">Aperture</label>
@@ -52,9 +53,8 @@ class ApertureInput extends Component {
 						id="aperture"
 						className="input-field"
 						onChange={this.handleInputChange}
-						value={value}						value={value}
+						value={this.props.values.aperture}
 						disabled={isLocked}
-
 					>
 						{fStops.map( (f,index) => (
 							<option value={f} key={'f-option-'+index}>{f}</option>
@@ -72,10 +72,11 @@ class ApertureInput extends Component {
 // export default ApertureInput;
 
 const mapStateToProps = state => ({
-	input: state.calc.input,
-	aperture: state.calc.aperture,
-	shutter: state.calc.shutter,
-	iso: state.calc.iso,
+	// aperture: state.calc.aperture,
+	// shutter: state.calc.shutter,
+	// iso: state.calc.iso,
+	locks: state.calc.locks,
+	values: state.calc.values,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

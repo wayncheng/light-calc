@@ -14,15 +14,14 @@ class IsoInput extends Component {
 
 	handleInputChange = event => {
 		event.preventDefault();
-		const { value,name } = event.target;
-		let input = value;
+		const { value } = event.target;
 		const payload = {
-			variable: name,
-			value: input,
+			param: 'iso',
+			value,
 		}
 
 		// If locked, don't change value / update state.
-		const isLocked = this.props.iso.isLocked;
+		const isLocked = this.props.locks.iso;
 		if (isLocked) {
 			console.log("Variable is locked. To adjust this variable's value, you must unlock the variable first.")
 		}
@@ -38,7 +37,8 @@ class IsoInput extends Component {
 
 	render() {
 		
-		const {value,isLocked} = this.props.iso;
+		// const {value} = this.props.iso;
+		const isLocked = this.props.locks.iso;
 		return (
 			<div className={classNames("input-group","iso",{locked:isLocked})}>
 				<label htmlFor="iso">ISO</label>
@@ -50,7 +50,7 @@ class IsoInput extends Component {
 						name="iso"
 						className="input-field"
 						onChange={this.handleInputChange}
-						value={value}
+						value={this.props.values.iso}
 						disabled={isLocked}
 						step="100"
 					/>
@@ -63,7 +63,9 @@ class IsoInput extends Component {
 }
 
 const mapStateToProps = state => ({
-	iso: state.calc.iso,
+	// iso: state.calc.iso,
+	locks: state.calc.locks,
+	values: state.calc.values,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

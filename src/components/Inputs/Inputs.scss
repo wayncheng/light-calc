@@ -38,7 +38,7 @@ input, .input-field {
 	text-align: center;
 
 	&:focus {
-		border-color: #3498db;
+		border-color: $color-focus;
 		outline: none;
 	}
 

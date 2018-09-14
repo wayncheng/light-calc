@@ -1,27 +1,41 @@
 import { 
 	UPDATE_INPUT,
 	TOGGLE_LOCK,
+	CALC_EXPOSURE,
 } from './actionTypes';
 
 
 const initialState = {
 	// params: {
-		aperture: {
-			value: 2.8,
-			isLocked: false
+		// shutter: {
+		// 	value: 10,
+		// 	isLocked: false
+		// },
+		// aperture: {
+		// 	value: 2.8,
+		// 	isLocked: false
+		// },
+		// iso: {
+		// 	value: 1600,
+		// 	isLocked: false
+		// },
+		// exposure: {
+		// 	value: 0,
+		// 	isLocked: false
+		// },
+
+		values: {
+			shutter: 10,
+			aperture: 2.8,
+			iso: 1600,
+			exposure: 0,
 		},
-		shutter: {
-			value: 10,
-			isLocked: false
-		},
-		iso: {
-			value: 1600,
-			isLocked: false
-		},
-		exposure: {
-			value: 0,
-			isLocked: false
-		},
+		locks: {
+			shutter: false,
+			aperture: false,
+			iso: false,
+			exposure: false,
+		}
 	// }
 }
 
@@ -32,27 +46,36 @@ export default (state = initialState, action) => {
 			
 			return {
 				...state,
-				// params: {
-					// ...state.params,
-					[action.payload.variable]: {
-						...state[action.payload.variable],
-						value: action.payload.value
-					}
-				// }
-				// [action.payload.variable]: action.payload.value
+					// [action.payload.variable]: {
+					// 	...state[action.payload.variable],
+					// 	value: action.payload.value
+					// }
+				values: {
+					...state.values,
+					[action.payload.param]: action.payload.value,
+				}
 			}
 		case TOGGLE_LOCK:
 			return {
 				...state,
-				// params: {
-					// ...state.params,
-					[action.param]: {
-						...state[action.param],
-						isLocked: !state[action.param].isLocked,
-					}
-				// }
+				// [action.param]: {
+				// 	...state[action.param],
+				// 	isLocked: !state[action.param].isLocked,
+				// },
+				locks: {
+					...state.locks,
+					[action.param]: !state.locks[action.param],
+				}
 			}
-
+		
+		case CALC_EXPOSURE:
+			return {
+				...state,
+				exposure: {
+					...state.exposure,
+					// value: action.value,
+				}
+			}
 
 		default:
 			return state
@@ -73,5 +96,10 @@ export const toggleLock = param => dispatch => {
 	})
 }
 
+export const calculateExposure = () => dispatch => {
+	dispatch({
+		type: CALC_EXPOSURE
+	})
+}
 
 ///////////////////////////////////////////////////////////////////////

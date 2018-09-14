@@ -15,19 +15,17 @@ class ShutterInput extends Component {
 
 	handleInputChange = event => {
 		event.preventDefault();
-		const { value,name } = event.target;
-		let input = value;
+		const { value } = event.target;
 		const payload = {
-			variable: name,
-			value: input,
+			param: 'shutter',
+			value,
 		}
 
 		// If locked, don't change value / update state.
-		const isLocked = this.props.shutter.isLocked;
+		const isLocked = this.props.locks.shutter;
 		if (isLocked) {
 			console.log("Variable is locked. To adjust this variable's value, you must unlock the variable first.")
-		}
-		else {
+		} else {
 			this.props.updateInput(payload);
 		}
 	}
@@ -38,7 +36,7 @@ class ShutterInput extends Component {
 	}
 
 	render() {
-		const {value,isLocked} = this.props.shutter;
+		const isLocked = this.props.locks.shutter;
 		return (
 			<div className={classNames("input-group","shutter",{locked:isLocked})}>
 				<label htmlFor="shutter">Shutter</label>
@@ -49,21 +47,20 @@ class ShutterInput extends Component {
 						name="shutter"
 						className="input-field"
 						onChange={this.handleInputChange}
-						// step="0.1"
-						// autoFocus
-						value={value}
+						value={this.props.values.shutter}
 						disabled={isLocked}
 					/>
 				</div>
 				<LockToggle onClick={this.handleLockToggle} />
-				{/* <button onClick={this.handleLockToggle}>Lock</button> */}
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => ({
-	shutter: state.calc.shutter,
+	// shutter: state.calc.shutter,
+	locks: state.calc.locks,
+	values: state.calc.values,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
