@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // import FormInput from './FormInput';
 import './Form.scss';
+import './Inputs/Inputs.scss';
 import ApertureInput from './Inputs/ApertureInput';
 import IsoInput from './Inputs/IsoInput';
 import ShutterInput from './Inputs/ShutterInput';

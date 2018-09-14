@@ -1,0 +1,37 @@
+@import "./config/variables";
+
+
+html {
+	font-size: 16px;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+body {
+	margin: 0;
+}
+
+#root {
+	min-height: 100vh;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+header {
+	padding: 2rem 1rem;
+}
+
+h1 {
+	text-align: center;
+	font-size: 1.7rem;
+	text-transform: lowercase;
+	font-weight: 500;
+	color: $fg-divider;
+	letter-spacing: -2px;
+	text-transform: uppercase;
+	margin: 0 auto;
+}

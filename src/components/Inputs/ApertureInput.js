@@ -5,6 +5,9 @@ import { updateInput, toggleLock, } from '../../modules/calc';
 import classNames from 'classnames';
 import LockToggle from '../LockToggle';
 
+// const fStops = [22,20,18,16,14,13,11,10,9.0,8.0,7.1,6.3,5.6,5.0,4.5,4.0,3.5,3.2,2.8,2.0,1.8,1.4,1.2];
+const fStops = ["22","20","18","16","14","13","11","10","9.0","8.0","7.1","6.3","5.6","5.0","4.5","4.0","3.5","3.2","2.8","2.0","1.8","1.4","1.2"];
+
 class ApertureInput extends Component {
 	constructor(props) {
 		super(props)
@@ -22,7 +25,14 @@ class ApertureInput extends Component {
 			value: input,
 		}
 
-		this.props.updateInput(payload);
+		// If locked, don't change value / update state.
+		const isLocked = this.props.aperture.isLocked;
+		if (isLocked) {
+			console.log("Variable is locked. To adjust this variable's value, you must unlock the variable first.")
+		}
+		else {
+			this.props.updateInput(payload);
+		}
 	}
 	handleLockToggle = event => {
 		event.preventDefault();
@@ -31,41 +41,24 @@ class ApertureInput extends Component {
 	}
 
 	render() {
+		const {value,isLocked} = this.props.aperture;
 		return (
-			<div className={classNames("input-group","aperture",{locked:this.props.aperture.isLocked})}>
+			<div className={classNames("input-group","aperture",{locked:isLocked})}>
 				<label htmlFor="aperture">Aperture</label>
 				<div className="input-wrap">
-					<span className="units">F</span>
+					{/* <span className="units">F</span> */}
 					<select 
 						name="aperture" 
 						id="aperture"
 						className="input-field"
 						onChange={this.handleInputChange}
-						value={this.props.aperture.value}
+						value={value}						value={value}
+						disabled={isLocked}
+
 					>
-						<option value="1.2">1.2</option>
-						<option value="1.4">1.4</option>
-						<option value="1.8">1.8</option>
-						<option value="2.0">2.0</option>
-						<option value="2.8">2.8</option>
-						<option value="3.2">3.2</option>
-						<option value="3.5">3.5</option>
-						<option value="4.0">4.0</option>
-						<option value="4.5">4.5</option>
-						<option value="5.0">5.0</option>
-						<option value="5.6">5.6</option>
-						<option value="6.3">6.3</option>
-						<option value="7.1">7.1</option>
-						<option value="8.0">8.0</option>
-						<option value="9.0">9.0</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="13">13</option>
-						<option value="14">14</option>
-						<option value="16">16</option>
-						<option value="18">18</option>
-						<option value="20">20</option>
-						<option value="22">22</option>
+						{fStops.map( (f,index) => (
+							<option value={f} key={'f-option-'+index}>{f}</option>
+						))}
 					</select>
 
 					{/* <input type="number" id="aperture" name="aperture" className="input-field" onChange={this.handleInputChange} value={this.props.aperture.value} step="0.1" autoFocus /> */}

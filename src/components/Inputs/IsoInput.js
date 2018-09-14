@@ -21,7 +21,14 @@ class IsoInput extends Component {
 			value: input,
 		}
 
-		this.props.updateInput(payload);
+		// If locked, don't change value / update state.
+		const isLocked = this.props.iso.isLocked;
+		if (isLocked) {
+			console.log("Variable is locked. To adjust this variable's value, you must unlock the variable first.")
+		}
+		else {
+			this.props.updateInput(payload);
+		}
 	}
 	handleLockToggle = event => {
 		event.preventDefault();
@@ -30,20 +37,22 @@ class IsoInput extends Component {
 	}
 
 	render() {
+		
+		const {value,isLocked} = this.props.iso;
 		return (
-			<div className={classNames("input-group","iso",{locked:this.props.iso.isLocked})}>
+			<div className={classNames("input-group","iso",{locked:isLocked})}>
 				<label htmlFor="iso">ISO</label>
 				<div className="input-wrap">
-					<span className="units">ISO</span>
+					{/* <span className="units">ISO</span> */}
 					<input 
 						type="number"
 						id="iso"
 						name="iso"
 						className="input-field"
 						onChange={this.handleInputChange}
-						value={this.props.iso.value}
+						value={value}
+						disabled={isLocked}
 						step="100"
-						autoFocus
 					/>
 				</div>
 				<LockToggle onClick={this.handleLockToggle} />

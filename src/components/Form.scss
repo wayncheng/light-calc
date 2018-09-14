@@ -1,8 +1,18 @@
-$form-font-size: 1.5rem;
+@import "../config/variables";
 
 
 .locked {
-	outline: 2px solid red;
+	// outline: 2px solid red;
+	// opacity: 0.5;
+	background-color: $locked-bg;
+	.input-field {
+		background-color: $locked-input-bg;
+		// color: $locked-fg;
+		border-color: transparent;
+		font-weight: 600;
+		// cursor: not-allowed;
+		pointer-events: none;
+	}
 }
 // form, input {
 // }
@@ -13,8 +23,3 @@ form {
 	justify-content: center;
 	align-items: flex-start;
 }
-
-
-
-
-@import './Inputs/Inputs';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { updateInput, toggleLock, } from '../modules/calc';
+import { toggleLock, } from '../modules/calc';
 import classNames from 'classnames';
 import "./Lock.scss"
 

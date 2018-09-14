@@ -11,7 +11,7 @@ const initialState = {
 			isLocked: false
 		},
 		shutter: {
-			value: "1/4000",
+			value: 10,
 			isLocked: false
 		},
 		iso: {

@@ -1,7 +1,4 @@
-$icon-active:     rgba(0,0,0,.54);
-$icon-inactive:   rgba(0,0,0,.38);
-$icon-white-active:     rgba(255,255,255,1);
-$icon-white-inactive:   rgba(255,255,255,.5);
+@import "../config/variables";
 
 // Default State: Unlocked, Can be locked
 
@@ -12,7 +9,7 @@ $icon-white-inactive:   rgba(255,255,255,.5);
 	color: $icon-inactive;
 	transition: all 1s;
 	padding: 1rem;
-	border-radius: 50%;
+	border-radius:6px;
 	cursor: pointer;
 
 	i {
@@ -22,13 +19,16 @@ $icon-white-inactive:   rgba(255,255,255,.5);
 		}
 	}
 	
-	&:hover, &:focus {
+	&:focus {
+		color: $icon-active;
+	}
+	&:hover {
 		color: $icon-active;
 		// background-color: rgba(#000,0.12);
 
-		i::before {
-			content: "lock"
-		}
+		// i::before {
+		// 	content: "lock"
+		// }
 	}
 }
 

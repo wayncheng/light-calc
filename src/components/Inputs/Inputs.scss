@@ -1,37 +1,58 @@
+@import "../../config/variables";
+
 .input-group {
 	position: relative;
 	// padding-top: 1rem;
-	margin: 1rem;
+	margin: 0.5rem .25rem;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-
+	align-items: stretch;
+	text-align: center;
 }
 .input-wrap {
 	position: relative;
-	margin: 1rem 0;
+	margin: .5rem 0;
+	min-width: 3em;
+	max-width: 4em;
 }
 label {
 	font-size: .7rem;
 	text-transform: uppercase;
+	line-height: 2;
+	word-wrap: wrap;
 }
 input, .input-field {
 	box-sizing: border-box;
 	font-size: $form-font-size;
-	width: initial;
+	width: 100%;
 	line-height: 2.5em;
 	height: 2.5em;
 	padding: 0;
 	// padding-right: 0;
 	// padding-left: .5em;
-	border-radius: .25em;
+	border-radius: $corner-rad;
 	border: 2px solid rgba(0,0,0,0.12);
 	background-color: #fff;
+	text-align: center;
+
+	&:focus {
+		border-color: #3498db;
+		outline: none;
+	}
+
+	&[type="number"] {
+		text-indent: 12px;
+	}
 }
 
-select {
-	height: 2em;
-	text-indent: 1.25em;
+select.input-field {
+	// text-indent: 1.25em;
+	// * Setting padding will be passed down to options, but text-indent is not passed down.
+	// * As a result, we use a combination of padding and indent to get the right look.
+	text-indent: 0.25em;
+	padding-left: 0.5em; 
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -49,25 +70,32 @@ select {
 	margin-top: -1px;
 }
 
-
-
-
-.aperture {
-
-	.input-field {
-		min-width: 4em;
-		line-height: 2.3em;
-		text-indent: 1.25em;
+// * ===== SHUTTER SPEED ===== * //
+.shutter {
+	.input-wrap {
+		max-width: 3.5em;
 	}
 }
-.iso {
-	
+
+// * ===== APERTURE ===== * //
+.aperture {
+// 	.input-wrap {
+// 		// min-width: 3em;
+
+// 	}
 	.input-field {
-		min-width: 4em;
-		max-width: 6.5em;
-		text-indent: 2.5em;
-		text-align: left;
+		line-height: 2.3em;
+// 		// width: 100%;
+// 		// text-indent: 1.25em;
 	}
+}
+
+// * ===== ISO ===== * //
+.iso {
+	// .input-wrap {
+	// 	// min-width: 3em;
+	// 	// max-width: 4.5em;
+	// }
 	.units {
 		line-height: 1;
 		// margin-left: 1rem;
@@ -79,13 +107,5 @@ select {
 		border-radius: 4px;
 		color: #fff;
 		padding: .25em;
-	}
-}
-.shutter {
-	.input-field {
-		padding: 0;
-		min-width: 2em;
-		max-width: 5em;
-		text-align: center;
 	}
 }
