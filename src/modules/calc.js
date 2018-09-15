@@ -1,67 +1,43 @@
-import { 
-	UPDATE_INPUT,
-	TOGGLE_LOCK,
-	CALC_EXPOSURE,
-} from './actionTypes';
+export const SET_VARIABLE_VALUE      = 'calc/SET_VARIABLE_VALUE'
+export const TOGGLE_LOCK      = 'calc/TOGGLE_LOCK'
+export const CALC_EXPOSURE      = 'calc/CALC_EXPOSURE'
 
+// ! Changing ISO just amplifies the EV change. e.g. If aperture increased, exposure gets darker. If ISO is then increased, it just pushes EV even darker, even though increasing ISO should ALWAYS make make exposure lighter.
+// TODO: Proper implementation of ISO factor. Currently broken.
 
 const initialState = {
-	// params: {
-		// shutter: {
-		// 	value: 10,
-		// 	isLocked: false
-		// },
-		// aperture: {
-		// 	value: 2.8,
-		// 	isLocked: false
-		// },
-		// iso: {
-		// 	value: 1600,
-		// 	isLocked: false
-		// },
-		// exposure: {
-		// 	value: 0,
-		// 	isLocked: false
-		// },
+
 
 		values: {
-			shutter: 10,
-			aperture: 2.8,
-			iso: 1600,
-			exposure: 0,
+			shutter: 1,
+			aperture: "1.4",
+			iso: 100,
+			ev: 1,
+			// ev_diff: 0,
 		},
 		locks: {
 			shutter: false,
 			aperture: false,
 			iso: false,
-			exposure: false,
+			ev: false,
 		}
-	// }
 }
 
 export default (state = initialState, action) => {
 	switch (action.type) {
 
-		case UPDATE_INPUT:
-			
+		case SET_VARIABLE_VALUE:
 			return {
 				...state,
-					// [action.payload.variable]: {
-					// 	...state[action.payload.variable],
-					// 	value: action.payload.value
-					// }
 				values: {
 					...state.values,
-					[action.payload.param]: action.payload.value,
+					[action.param]: action.value,
 				}
 			}
+
 		case TOGGLE_LOCK:
 			return {
 				...state,
-				// [action.param]: {
-				// 	...state[action.param],
-				// 	isLocked: !state[action.param].isLocked,
-				// },
 				locks: {
 					...state.locks,
 					[action.param]: !state.locks[action.param],
@@ -71,9 +47,9 @@ export default (state = initialState, action) => {
 		case CALC_EXPOSURE:
 			return {
 				...state,
-				exposure: {
-					...state.exposure,
-					// value: action.value,
+				values: {
+					...state.values,
+					ev: action.value,
 				}
 			}
 
@@ -83,23 +59,47 @@ export default (state = initialState, action) => {
 }
 
 // Form Updates ------------------------------------
-export const updateInput = payload => dispatch => {
-	dispatch({
-		type: UPDATE_INPUT,
-		payload,
-	})
-}
 export const toggleLock = param => dispatch => {
 	dispatch({
 		type: TOGGLE_LOCK,
 		param,
 	})
 }
-
-export const calculateExposure = () => dispatch => {
+export const setVariableValue = (param,value) => dispatch => {
 	dispatch({
-		type: CALC_EXPOSURE
+		type: SET_VARIABLE_VALUE,
+		param,
+		value,
 	})
 }
 
+export const calculateExposure = all_values => dispatch => {
+	const {shutter,aperture,iso} = all_values;
+	// * Exposure = log2(aperture^2/shutter)
+	// ? iso factor
+
+	const isoFactor = iso / 100;
+	
+	const exposure = Math.log2( Math.pow(aperture,2) / shutter) * isoFactor;
+	console.log('exposure:',exposure)
+
+	// dispatch({
+	// 	type: CALC_EXPOSURE,
+	// 	value: exposure,
+	// })
+
+	dispatch( setVariableValue('ev',exposure) )
+}
+
+export const updateVariable = (param,value,all_values) => dispatch => {
+	// dispatch({
+	// 	type: SET_VARIABLE_VALUE,
+	// 	param,
+	// 	value,
+	// })
+
+	dispatch( setVariableValue(param,value) )
+
+	dispatch( calculateExposure(all_values) )
+}
 ///////////////////////////////////////////////////////////////////////

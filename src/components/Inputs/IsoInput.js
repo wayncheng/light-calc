@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { updateInput, toggleLock, } from '../../modules/calc';
+import { updateVariable, toggleLock, } from '../../modules/calc';
 import classNames from 'classnames';
 import LockToggle from '../LockToggle';
 
@@ -15,18 +15,26 @@ class IsoInput extends Component {
 	handleInputChange = event => {
 		event.preventDefault();
 		const { value } = event.target;
-		const payload = {
-			param: 'iso',
-			value,
+		const { aperture, shutter,ev } = this.props.values;
+		const param = 'iso';
+		// const payload = {
+		// 	param: 'iso',
+		// 	value,
+		// }
+		const all_values = {
+			[param]: value,
+			aperture,
+			shutter,
+			ev,
 		}
 
+		
 		// If locked, don't change value / update state.
 		const isLocked = this.props.locks.iso;
-		if (isLocked) {
-			console.log("Variable is locked. To adjust this variable's value, you must unlock the variable first.")
-		}
+		if (isLocked) { 
+			console.log("Variable is locked. To adjust this variable's value, you must unlock the variable first.") }
 		else {
-			this.props.updateInput(payload);
+			this.props.updateVariable(param,value,all_values);
 		}
 	}
 	handleLockToggle = event => {
@@ -50,6 +58,7 @@ class IsoInput extends Component {
 						name="iso"
 						className="input-field"
 						onChange={this.handleInputChange}
+						// onKeyUp={this.handleInputChange}
 						value={this.props.values.iso}
 						disabled={isLocked}
 						step="100"
@@ -69,7 +78,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	updateInput,
+	updateVariable,
 	toggleLock,
 }, dispatch)
 
@@ -77,9 +86,3 @@ export default connect(
   mapStateToProps, 
   mapDispatchToProps
 )(IsoInput)
-
-IsoInput.defaultProps = {
-	name: 'untitled_input',
-	label: 'Untitled',
-	placeholder: null,
-}

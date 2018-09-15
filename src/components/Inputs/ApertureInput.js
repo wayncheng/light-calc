@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { updateInput, toggleLock, } from '../../modules/calc';
+import { updateVariable, toggleLock, } from '../../modules/calc';
 import classNames from 'classnames';
 import LockToggle from '../LockToggle';
 
 // const fStops = [22,20,18,16,14,13,11,10,9.0,8.0,7.1,6.3,5.6,5.0,4.5,4.0,3.5,3.2,2.8,2.0,1.8,1.4,1.2];
-const fStops = ["22","20","18","16","14","13","11","10","9.0","8.0","7.1","6.3","5.6","5.0","4.5","4.0","3.5","3.2","2.8","2.0","1.8","1.4","1.2"];
+const fStops = ["22","20","18","16","14","13","11","10","9.0","8.0","7.1","6.3","5.6","5.0","4.5","4.0","3.5","3.2","2.8","2.0","1.8","1.4","1.2","1.0"];
 
 class ApertureInput extends Component {
 	constructor(props) {
@@ -19,9 +19,17 @@ class ApertureInput extends Component {
 	handleInputChange = event => {
 		event.preventDefault();
 		const { value } = event.target;
-		const payload = {
-			param: 'aperture',
-			value,
+		const { iso, shutter } = this.props.values;
+		const param = 'aperture';
+
+		// const payload = {
+		// 	param: 'aperture',
+		// 	value,
+		// }
+		const all_values = {
+			aperture: value,
+			iso,
+			shutter,
 		}
 
 		// If locked, don't change value / update state.
@@ -30,7 +38,7 @@ class ApertureInput extends Component {
 			console.log("Variable is locked. To adjust this variable's value, you must unlock the variable first.")
 		}
 		else {
-			this.props.updateInput(payload);
+			this.props.updateVariable(param,value,all_values);
 		}
 	}
 	handleLockToggle = event => {
@@ -80,7 +88,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	updateInput,
+	updateVariable,
 	toggleLock,
 }, dispatch)
 
@@ -88,9 +96,3 @@ export default connect(
   mapStateToProps, 
   mapDispatchToProps
 )(ApertureInput)
-
-ApertureInput.defaultProps = {
-	name: 'untitled_input',
-	label: 'Untitled',
-	placeholder: null,
-}

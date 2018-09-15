@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { updateInput, toggleLock, } from '../../modules/calc';
+import { updateVariable, toggleLock, } from '../../modules/calc';
 import classNames from 'classnames';
 import LockToggle from '../LockToggle';
 
@@ -15,10 +15,19 @@ class ShutterInput extends Component {
 
 	handleInputChange = event => {
 		event.preventDefault();
+		
 		const { value } = event.target;
-		const payload = {
-			param: 'shutter',
-			value,
+		const { iso, aperture } = this.props.values;
+		const param = 'shutter';
+
+		// const payload = {
+		// 	param: 'shutter',
+		// 	value,
+		// }
+		const all_values = {
+			shutter: value,
+			iso,
+			aperture,
 		}
 
 		// If locked, don't change value / update state.
@@ -26,7 +35,7 @@ class ShutterInput extends Component {
 		if (isLocked) {
 			console.log("Variable is locked. To adjust this variable's value, you must unlock the variable first.")
 		} else {
-			this.props.updateInput(payload);
+			this.props.updateVariable(param,value,all_values);
 		}
 	}
 	handleLockToggle = event => {
@@ -64,7 +73,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	updateInput,
+	updateVariable,
 	toggleLock,
 }, dispatch)
 
