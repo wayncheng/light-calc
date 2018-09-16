@@ -1,50 +1,79 @@
 @import "../../config/variables";
 
+$input-min-w: 3em;
+$input-max-w: 4em;
+
 .input-group {
 	position: relative;
 	// padding-top: 1rem;
-	margin: 0.5rem .25rem;
-	padding: 0.5rem;
-	border-radius: 0.5rem;
+	margin: 0.5rem 5px;
+	padding: 1rem .75rem;
+	border-radius: 1rem;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	text-align: center;
+	border: 2px solid transparent;
+	&:focus-within {
+		// border-color: $fg-divider;
+		border-color: $form-bg;
+		// box-shadow: 1px 4px 24px 0px rgba(0, 0, 0, 0.1);
+		// background-color: rgba($form-bg,0.5);
+	}
 }
+
+
 .input-wrap {
 	position: relative;
 	margin: .5rem 0;
-	min-width: 3em;
-	max-width: 4em;
+	min-width: $input-min-w;
+	max-width: $input-max-w;
 }
 label {
 	font-size: .7rem;
 	text-transform: uppercase;
-	line-height: 2;
+	line-height: 1;
 	word-wrap: wrap;
 }
-input, .input-field {
+
+.facade,
+.input-field,
+input {
 	box-sizing: border-box;
 	font-size: $form-font-size;
-	width: 100%;
-	line-height: 2.5em;
 	height: 2.5em;
+	line-height: 2.5em;
+	width: 100%;
+	min-width: 3em;
+	max-width: 4em;
 	padding: 0;
-	// padding-right: 0;
-	// padding-left: .5em;
-	border-radius: $corner-rad;
-	border: 2px solid rgba(0,0,0,0.12);
 	background-color: #fff;
+	border-radius: $corner-rad;
+	border: 2px solid transparent;
 	text-align: center;
+	transition: all .4s;
 
+	// border: none;
+	background-color: $form-bg;
+
+	&:hover {
+		border-color: $fg-divider;
+	}
 	&:focus {
 		border-color: $color-focus;
 		outline: none;
+
 	}
 
 	&[type="number"] {
 		text-indent: 12px;
+		line-height: 1em;
 	}
+}
+
+.facade {
+	@extend .input-wrap;
+	width: initial;
 }
 
 select.input-field {
@@ -78,24 +107,14 @@ select.input-field {
 }
 
 // * ===== APERTURE ===== * //
-.aperture {
-// 	.input-wrap {
-// 		// min-width: 3em;
-
+// .aperture {
+// 	.input-field {
+// 		line-height: 2.3em;
 // 	}
-	.input-field {
-		line-height: 2.3em;
-// 		// width: 100%;
-// 		// text-indent: 1.25em;
-	}
-}
+// }
 
 // * ===== ISO ===== * //
 .iso {
-	// .input-wrap {
-	// 	// min-width: 3em;
-	// 	// max-width: 4.5em;
-	// }
 	.units {
 		line-height: 1;
 		// margin-left: 1rem;

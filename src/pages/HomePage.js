@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from '../components/Form';
+import StatsPanel from '../components/StatsPanel';
 
 const HomePage = props => {
     return (
@@ -7,9 +8,10 @@ const HomePage = props => {
         <header>
           <h1>Light Calculator</h1>
         </header>
-		<main>
-			<Form/>
-		</main>
+				<main>
+					<Form/>
+				</main>
+				<StatsPanel/>
       </div>
     );
 }

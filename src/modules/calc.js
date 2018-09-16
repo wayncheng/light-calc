@@ -65,6 +65,19 @@ export const toggleLock = param => dispatch => {
 		param,
 	})
 }
+
+export const updateVariable = (param,value,all_values) => dispatch => {
+	// dispatch({
+	// 	type: SET_VARIABLE_VALUE,
+	// 	param,
+	// 	value,
+	// })
+
+	dispatch( setVariableValue(param,value) )
+
+	dispatch( calculateExposure(all_values) )
+}
+
 export const setVariableValue = (param,value) => dispatch => {
 	dispatch({
 		type: SET_VARIABLE_VALUE,
@@ -79,6 +92,7 @@ export const calculateExposure = all_values => dispatch => {
 	// ? iso factor
 
 	const isoFactor = iso / 100;
+
 	
 	const exposure = Math.log2( Math.pow(aperture,2) / shutter) * isoFactor;
 	console.log('exposure:',exposure)
@@ -91,15 +105,17 @@ export const calculateExposure = all_values => dispatch => {
 	dispatch( setVariableValue('ev',exposure) )
 }
 
-export const updateVariable = (param,value,all_values) => dispatch => {
-	// dispatch({
-	// 	type: SET_VARIABLE_VALUE,
-	// 	param,
-	// 	value,
-	// })
-
-	dispatch( setVariableValue(param,value) )
-
-	dispatch( calculateExposure(all_values) )
+export const adjustValues = (values,locks) => dispatch => {
+	// - Track how many vars are locked. 
+	// - When 2 vars are locked, adjust values.
+	// - Check which vars are locked
+	// - Determine which conversion to use
+	// - When one var changes, convert/solve for other var
+	// - Set the new value of other var in state (setVariableValue)
+	//     + when the updated value propagates back to React component,
+	//       the onChange will run again, and fire this function again
+	//       (recursively?), but the conversion will give the same answer
+	//       as before, so the state will remain the same and therefore
+	//       stop updating (theoretically). Maybe prevent this somehow?
 }
 ///////////////////////////////////////////////////////////////////////

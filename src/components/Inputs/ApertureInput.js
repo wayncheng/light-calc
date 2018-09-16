@@ -56,7 +56,7 @@ class ApertureInput extends Component {
 				<label htmlFor="aperture">Aperture</label>
 				<div className="input-wrap">
 					{/* <span className="units">F</span> */}
-					<select 
+					{/* <select 
 						name="aperture" 
 						id="aperture"
 						className="input-field"
@@ -67,9 +67,18 @@ class ApertureInput extends Component {
 						{fStops.map( (f,index) => (
 							<option value={f} key={'f-option-'+index}>{f}</option>
 						))}
-					</select>
+					</select> */}
+					<input 
+						type="number"
+						name="aperture" 
+						id="aperture"
+						className="input-field"
+						onChange={this.handleInputChange}
+						value={this.props.values.aperture}
+						disabled={isLocked}
+						step=".1"
+					/>
 
-					{/* <input type="number" id="aperture" name="aperture" className="input-field" onChange={this.handleInputChange} value={this.props.aperture.value} step="0.1" autoFocus /> */}
 				</div>
 				<LockToggle onClick={this.handleLockToggle} />
 				{/* <button onClick={this.handleLockToggle}>Lock</button> */}

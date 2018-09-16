@@ -7,7 +7,6 @@ import './Inputs/Inputs.scss';
 import ApertureInput from './Inputs/ApertureInput';
 import IsoInput from './Inputs/IsoInput';
 import ShutterInput from './Inputs/ShutterInput';
-import Facade from './Facade';
 import ExposureControl from './Inputs/ExposureControl';
 
 // TODO: Extract Exposure Component

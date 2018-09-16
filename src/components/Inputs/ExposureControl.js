@@ -16,20 +16,7 @@ class ExposureControl extends Component {
 			ev_diff: null,
 		}
 	}
-	
-	componentWillReceiveProps = (nextProps) => {
-		if (nextProps.values.ev !== this.props.values.ev){
-			const ev_previous = this.props.values.ev;
-			const ev = nextProps.values.ev;
-			const ev_diff = ev - ev_previous;
 
-			this.setState({
-				ev_previous,
-				ev,
-				ev_diff,
-			})
-		}
-	}
 
 	handleInputChange = event => {
 		event.preventDefault();
@@ -55,11 +42,11 @@ class ExposureControl extends Component {
 		event.preventDefault();
 		this.props.toggleLock('ev')
 	}
-	handleExpoCalc = event => {
-		event.preventDefault();
+	// handleExpoCalc = event => {
+	// 	event.preventDefault();
 
-		this.props.calculateExposure(this.props.values)
-	}
+	// 	this.props.calculateExposure(this.props.values)
+	// }
 
 	render() {
 		const isLocked = this.props.locks.ev;
@@ -68,10 +55,7 @@ class ExposureControl extends Component {
 				<p className="eyebrow">Exposure</p>
 				<Facade>{Math.round(this.props.values.ev * 10)/10}</Facade>
 				<LockToggle onClick={this.handleLockToggle} />
-				<button onClick={this.handleExpoCalc}>Calculate EV</button>
-
-				<p>EV prev: {this.state.ev_previous}</p>
-				<p>EV diff: {this.state.ev_diff}</p>
+				{/* <button onClick={this.handleExpoCalc}>Calculate EV</button> */}
 			</div>
 		)
 	}
